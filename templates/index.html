@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CoffeeBot - Coffee Shop Assistant</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <div class="chat-container">
+
+        <header class="chat-header">
+            <h2>☕ CoffeeBot</h2>
+            <p>Your Coffee Shop Assistant</p>
+        </header>
+
+        <div id="chat-box" class="chat-box">
+
+            <div class="bot-message">
+                Hello! Welcome to our coffee shop. What would you like to order?
+            </div>
+
+        </div>
+
+        <form id="chat-form" class="chat-input">
+
+            <input
+                type="text"
+                id="user-input"
+                placeholder="Type your message..."
+                autocomplete="off"
+                required
+            >
+
+            <button type="submit">Send</button>
+
+        </form>
+
+        <button id="reset-button" class="reset-button">
+            Restart Conversation
+        </button>
+
+    </div>
+
+    <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+
+</body>
+</html>

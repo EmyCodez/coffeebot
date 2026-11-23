@@ -1,0 +1,70 @@
+
+{
+  "start_state": "greeting",
+  "states": {
+    "greeting": {
+      "conditions": [
+        {
+          "keywords": ["hi", "hello", "hey"],
+          "response": "Hello! Welcome to our coffee shop. We have Latte (AED 18), Cappuccino (AED 16), and Espresso (AED 10). What would you like to order?",
+          "next_state": "order"
+        },
+        {
+          "keywords": ["menu", "order", "coffee", "buy"],
+          "response": "We serve Latte (AED 18), Cappuccino (AED 16), and Espresso (AED 10). Which one would you like?",
+          "next_state": "order"
+        }
+      ],
+      "fallback": "Hi there! Say 'hi' or 'order' to see our coffee options."
+    },
+    "order": {
+      "conditions": [
+        {
+          "keywords": ["latte"],
+          "response": "You selected a Latte (AED 18). Would you like to confirm or cancel your order?",
+          "next_state": "confirmation",
+          "save": {
+            "item": "Latte",
+            "price": "AED 18"
+          }
+        },
+        {
+          "keywords": ["cappuccino"],
+          "response": "You selected a Cappuccino (AED 16). Would you like to confirm or cancel your order?",
+          "next_state": "confirmation",
+          "save": {
+            "item": "Cappuccino",
+            "price": "AED 16"
+          }
+        },
+        {
+          "keywords": ["espresso"],
+          "response": "You selected an Espresso (AED 10). Would you like to confirm or cancel your order?",
+          "next_state": "confirmation",
+          "save": {
+            "item": "Espresso",
+            "price": "AED 10"
+          }
+        }
+      ],
+      "fallback": "Please choose one of our coffees: Latte, Cappuccino, or Espresso."
+    },
+    "confirmation": {
+      "conditions": [
+        {
+          "keywords": ["yes", "yeah", "confirm", "ok", "okay", "sure"],
+          "response": "Your {item} ({price}) is confirmed! Thank you for ordering with us.",
+          "next_state": "greeting",
+          "clear_context": true
+        },
+        {
+          "keywords": ["no", "cancel", "stop"],
+          "response": "Your order has been cancelled. Let me know if you want to order something else!",
+          "next_state": "order",
+          "clear_context": true
+        }
+      ],
+      "fallback": "Please reply with 'confirm' to place your {item} order, or 'cancel' to drop it."
+    }
+  }
+}
