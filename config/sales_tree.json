@@ -54,7 +54,7 @@
         {
           "keywords": ["yes", "yeah", "confirm", "ok", "okay", "sure"],
           "response": "Your {item} ({price}) is confirmed! Thank you for ordering with us.",
-          "next_state": "greeting",
+          "next_state": "order",
           "clear_context": true
         },
         {
@@ -64,7 +64,7 @@
           "clear_context": true
         }
       ],
-      "fallback": "Please reply with 'confirm' to place your {item} order, or 'cancel' to drop it."
+      "fallback": "Please reply with 'confirm' to place your order, or 'cancel' to drop it."
     }
   }
 }

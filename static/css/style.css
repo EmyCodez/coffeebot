@@ -123,3 +123,42 @@ body {
 .reset-button {
     margin: 0 12px 12px;
 }
+
+
+/* Customer choice buttons */
+
+.choice-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 12px;
+}
+
+.choice-button {
+    width: 100%;
+    padding: 13px;
+
+    background: #eee4dc;
+    color: #5d4037;
+
+    border: 1px solid #d7c5b7;
+    border-radius: 8px;
+
+    font-size: 15px;
+    font-weight: bold;
+
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.choice-button:hover {
+    background: #d7c0ad;
+}
+
+.choice-button:active {
+    transform: scale(0.98);
+}
+
+.reset-button {
+    display: block;
+}

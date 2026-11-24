@@ -1,16 +1,10 @@
 
-const chatForm = document.getElementById("chat-form");
-const userInput = document.getElementById("user-input");
 const chatBox = document.getElementById("chat-box");
+const choiceContainer = document.getElementById("choice-container");
 const resetButton = document.getElementById("reset-button");
 
 
-/*
- Add a message to the chat window.
-*/
-
 function addMessage(message, sender) {
-
     const messageElement = document.createElement("div");
 
     messageElement.classList.add(
@@ -20,42 +14,57 @@ function addMessage(message, sender) {
     messageElement.textContent = message;
 
     chatBox.appendChild(messageElement);
-
     chatBox.scrollTop = chatBox.scrollHeight;
 }
 
 
-/*
- Handle customer messages.
-*/
+function displayChoices(state) {
+    choiceContainer.innerHTML = "";
 
-chatForm.addEventListener("submit", async (event) => {
+    let options = [];
 
-    event.preventDefault();
+    if (state === "order") {
+        options = [
+            { label: "☕ Latte - AED 18", value: "latte" },
+            { label: "☕ Cappuccino - AED 16", value: "cappuccino" },
+            { label: "☕ Espresso - AED 10", value: "espresso" }
+        ];
+    }
 
-    const message = userInput.value.trim();
+    if (state === "confirmation") {
+        options = [
+            { label: "Confirm Order", value: "yes" },
+            { label: "Cancel Order", value: "cancel" }
+        ];
+    }
 
-    if (!message) return;
+    options.forEach(option => {
+        const button = document.createElement("button");
 
-    // Display customer message
-    addMessage(message, "user");
+        button.textContent = option.label;
+        button.classList.add("choice-button");
 
-    userInput.value = "";
+        button.addEventListener("click", () => {
+            sendMessage(option.value, option.label);
+        });
+
+        choiceContainer.appendChild(button);
+    });
+}
+
+
+async function sendMessage(message, displayText = message) {
+    addMessage(displayText, "user");
+
+    choiceContainer.innerHTML = "";
 
     try {
-
         const response = await fetch("/chat", {
-
             method: "POST",
-
             headers: {
                 "Content-Type": "application/json"
             },
-
-            body: JSON.stringify({
-                message: message
-            })
-
+            body: JSON.stringify({ message: message })
         });
 
         const data = await response.json();
@@ -64,26 +73,18 @@ chatForm.addEventListener("submit", async (event) => {
             throw new Error(data.error || "Something went wrong.");
         }
 
-        // Display chatbot response
         addMessage(data.response, "bot");
 
+        displayChoices(data.current_state);
+
     } catch (error) {
-
         addMessage(error.message, "bot");
-
     }
+}
 
-});
-
-
-/*
- Restart the conversation.
-*/
 
 resetButton.addEventListener("click", async () => {
-
     try {
-
         const response = await fetch("/reset", {
             method: "POST"
         });
@@ -97,11 +98,13 @@ resetButton.addEventListener("click", async () => {
         chatBox.innerHTML = "";
 
         addMessage(data.response, "bot");
+        displayChoices(data.current_state);
 
     } catch (error) {
-
         addMessage(error.message, "bot");
-
     }
-
 });
+
+
+// Display the initial coffee options.
+displayChoices("order");

@@ -25,7 +25,7 @@ bot = DecisionEngine(CONFIG_PATH)
 def home():
     """Display the chatbot interface."""
 
-    session["current_state"] = bot.start_state
+    session["current_state"] = "order"
     session["order_context"] = {}
 
     return render_template("index.html")
@@ -71,12 +71,12 @@ def chat():
 def reset():
     """Reset the conversation."""
 
-    session["current_state"] = bot.start_state
+    session["current_state"] = "order"
     session["order_context"] = {}
 
     return jsonify({
         "response": "Hello! Welcome to our coffee shop. What would you like to order?",
-        "current_state": bot.start_state
+        "current_state": "order"
     })
 
 
